@@ -11,10 +11,10 @@
     <meta property="og:description" content="Kenali peluang menjadi Ejen MOVON Malaysia. Fahami produk, sistem komisen dan cara mendaftar.">
     <meta property="og:type" content="website">
 
-    <!-- Fonts -->
+    <!-- Fonts: Using Poppins for that bold, modern marketer feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,7 +26,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -34,702 +34,694 @@
                             dark: '#0B1D3A',
                             cyan: '#11C5ED',
                             light: '#F4F8FF',
-                            text: '#18253B'
+                            text: '#18253B',
+                            yellow: '#FFD700', /* Top marketer highlight color */
+                            red: '#E11D48'
                         },
-                        whatsapp: '#20B858'
+                        whatsapp: '#25D366' /* Official WhatsApp Green */
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
                     }
                 }
             }
         }
     </script>
 
-    <!-- Custom CSS for components -->
+    <!-- Custom CSS for components & Animations -->
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; color: #18253B; }
-        .hero-gradient { background: linear-gradient(135deg, #F4F8FF 0%, #E2EDFF 100%); }
-        .dark-gradient { background: linear-gradient(135deg, #0B1D3A 0%, #1a365d 100%); }
-        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        body { font-family: 'Poppins', sans-serif; color: #18253B; overflow-x: hidden; }
         
+        /* Marketer Text Highlighter Effect */
+        .text-highlight { 
+            background: linear-gradient(180deg, rgba(255,255,255,0) 60%, #FFD700 60%); 
+            display: inline; 
+            padding: 0 4px;
+        }
+        .text-highlight-blue { 
+            background: linear-gradient(180deg, rgba(255,255,255,0) 60%, #11C5ED 60%); 
+            display: inline; 
+            padding: 0 4px;
+        }
+
+        /* Gradients */
+        .hero-gradient { background: linear-gradient(135deg, #F4F8FF 0%, #E2EDFF 100%); }
+        .dark-gradient { background: linear-gradient(135deg, #0B1D3A 0%, #061022 100%); }
+        
+        /* Interactive Cards */
+        .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover:hover { 
+            transform: translateY(-10px) scale(1.02); 
+            box-shadow: 0 25px 50px -12px rgba(8, 105, 232, 0.25); 
+            border-color: #0869E8;
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
         /* Accordion transition */
         .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; }
         .accordion-content.active { max-height: 500px; padding-bottom: 1rem; }
         .accordion-icon { transition: transform 0.3s ease; }
-        .accordion-button.active .accordion-icon { transform: rotate(180deg); }
+        .accordion-button.active .accordion-icon { transform: rotate(180deg); color: #0869E8; }
+        .accordion-button.active { background-color: #F4F8FF; }
+
+        /* Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #25D366);
+            z-index: 100;
+            transition: width 0.1s ease;
+        }
+
+        /* WhatsApp Bubble Style for Testimonials */
+        .wa-bubble {
+            position: relative;
+            background: #E1FFC7;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .wa-bubble::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-bottom-color: #E1FFC7;
+            border-right-color: #E1FFC7;
+        }
+        
+        /* Glowing CTA Button */
+        .btn-glowing {
+            animation: glowing 2s infinite;
+        }
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px #25D366; }
+            50% { box-shadow: 0 0 20px #25D366; }
+            100% { box-shadow: 0 0 5px #25D366; }
+        }
     </style>
 </head>
 <body class="bg-white antialiased">
 
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Top Announcement Bar (Creates Urgency & Authority) -->
+    <div class="bg-brand-red text-white text-sm font-semibold py-2 text-center px-4">
+        <span class="animate-pulse inline-block w-2 h-2 rounded-full bg-white mr-2"></span>
+        PENGAMBILAN EJEN BARU KINI DIBUKA. <a href="#cara-join" class="underline ml-1 hover:text-brand-yellow transition">DAFTAR MINAT HARI INI &rarr;</a>
+    </div>
+
     <!-- SECTION 1 — STICKY NAVIGATION -->
-    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm transition-all duration-300">
+    <nav class="fixed w-full z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300" style="top: 36px;" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo / Title -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="font-bold text-xl md:text-2xl text-brand-dark tracking-tight">
-                        <span class="text-brand-blue">MOVON</span> Agent Opportunity
+                    <a href="#" class="font-black text-2xl md:text-3xl text-brand-dark tracking-tighter">
+                        <span class="text-brand-blue">MOVON</span><span class="text-gray-300 text-xl ml-2 font-medium hidden sm:inline">|</span><span class="text-sm sm:text-base font-semibold text-gray-600 sm:ml-2 mt-1 block sm:inline">Agent Team</span>
                     </a>
                 </div>
 
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="#kenapa" class="text-gray-600 hover:text-brand-blue font-medium transition">Kenapa MOVON</a>
-                    <a href="#produk" class="text-gray-600 hover:text-brand-blue font-medium transition">Produk</a>
-                    <a href="#komisen" class="text-gray-600 hover:text-brand-blue font-medium transition">Komisen</a>
-                    <a href="#cara-join" class="text-gray-600 hover:text-brand-blue font-medium transition">Cara Join</a>
-                    <a href="#faq" class="text-gray-600 hover:text-brand-blue font-medium transition">FAQ</a>
-                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20jadi%20Ejen%20MOVON.%20Saya%20dah%20tengok%20website%20recruitment%20dan%20nak%20tahu%20cara%20daftar%20serta%20sistem%20komisen.%20Boleh%20bantu%20saya%3F" target="_blank" class="bg-brand-blue hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md hover:shadow-lg transition-all">
-                        NAK JADI EJEN
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#kenapa" class="text-gray-600 hover:text-brand-blue font-semibold transition">Kenapa MOVON</a>
+                    <a href="#produk" class="text-gray-600 hover:text-brand-blue font-semibold transition">Produk</a>
+                    <a href="#komisen" class="text-gray-600 hover:text-brand-blue font-semibold transition">Komisen</a>
+                    <a href="#testimoni" class="text-gray-600 hover:text-brand-blue font-semibold transition">Testimoni</a>
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20jadi%20Ejen%20MOVON.%20Boleh%20bantu%20saya%3F" target="_blank" class="bg-gradient-to-r from-whatsapp to-green-500 hover:from-green-500 hover:to-whatsapp text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 btn-glowing">
+                        <i class="fab fa-whatsapp text-lg"></i> DAFTAR SEKARANG
                     </a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand-dark focus:outline-none p-2">
-                        <i class="fas fa-bars text-2xl"></i>
+                    <button id="mobile-menu-btn" class="text-brand-dark focus:outline-none p-2 bg-gray-50 rounded-lg border border-gray-200">
+                        <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-100 shadow-lg absolute w-full">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-2xl border-b border-gray-100 absolute w-full max-h-[calc(100vh-116px)] overflow-y-auto">
             <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#kenapa" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-brand-light rounded-lg">Kenapa MOVON</a>
-                <a href="#produk" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-brand-light rounded-lg">Produk</a>
-                <a href="#komisen" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-brand-light rounded-lg">Komisen</a>
-                <a href="#cara-join" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-brand-light rounded-lg">Cara Join</a>
-                <a href="#faq" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-brand-light rounded-lg">FAQ</a>
+                <a href="#kenapa" class="mobile-link block px-4 py-3 text-base font-bold text-gray-800 hover:bg-brand-light hover:text-brand-blue rounded-xl">Kenapa MOVON</a>
+                <a href="#produk" class="mobile-link block px-4 py-3 text-base font-bold text-gray-800 hover:bg-brand-light hover:text-brand-blue rounded-xl">Produk</a>
+                <a href="#komisen" class="mobile-link block px-4 py-3 text-base font-bold text-gray-800 hover:bg-brand-light hover:text-brand-blue rounded-xl">Komisen</a>
+                <a href="#testimoni" class="mobile-link block px-4 py-3 text-base font-bold text-gray-800 hover:bg-brand-light hover:text-brand-blue rounded-xl">Testimoni</a>
+                <div class="pt-4 mt-2 border-t border-gray-100">
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20jadi%20Ejen%20MOVON." target="_blank" class="flex justify-center items-center gap-2 bg-whatsapp text-white px-4 py-3 rounded-xl font-bold text-center w-full shadow-lg">
+                        <i class="fab fa-whatsapp text-xl"></i> DAFTAR SEKARANG
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- SECTION 2 — HERO SECTION -->
-    <section class="hero-gradient pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-                
-                <!-- Hero Content -->
-                <div class="w-full lg:w-1/2 text-center lg:text-left z-10">
-                    <div class="inline-block bg-white px-4 py-1.5 rounded-full text-brand-blue font-semibold text-sm mb-6 shadow-sm border border-blue-100">
-                        <i class="fas fa-star text-yellow-400 mr-2"></i> PELUANG EJEN MOVON MALAYSIA
-                    </div>
-                    
-                    <!-- A/B Testing Default Headline -->
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-6">
-                        Nak Tambah Pendapatan Dengan Jual Produk Rumah? Kenali Peluang Jadi <span class="text-brand-blue">Ejen MOVON.</span>
-                    </h1>
-                    
-                    <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                        Terokai peluang menjadi ejen jualan peralatan rumah seperti peti sejuk, mesin basuh dan aircond. Ketahui bagaimana sistem jualan, komisen dan sokongan ejen berfungsi sebelum anda bermula.
-                    </p>
-                    
-                    <ul class="text-left space-y-3 mb-10 max-w-lg mx-auto lg:mx-0">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-whatsapp mt-1 mr-3 text-xl"></i>
-                            <span class="text-gray-700 font-medium">Produk home appliances berjenama sebenar.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-whatsapp mt-1 mr-3 text-xl"></i>
-                            <span class="text-gray-700 font-medium">Peluang komisen berasaskan jualan.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-whatsapp mt-1 mr-3 text-xl"></i>
-                            <span class="text-gray-700 font-medium">Penerangan dan panduan untuk bakal ejen baru.</span>
-                        </li>
-                    </ul>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20jadi%20Ejen%20MOVON.%20Boleh%20terangkan%20macam%20mana%20nak%20mula%3F" target="_blank" class="bg-whatsapp hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3">
-                            <i class="fab fa-whatsapp text-2xl"></i> SAYA NAK TAHU CARA JOIN
-                        </a>
-                        <a href="#komisen" class="bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-light px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center">
-                            TENGOK CARA DAPAT KOMISEN
-                        </a>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-4 italic">
-                        *Klik WhatsApp untuk dapatkan penerangan. Tiada kewajipan menyertai hanya kerana bertanya.
-                    </p>
+    <!-- SECTION 2 — HERO SECTION (VSL Style / High Impact) -->
+    <section class="hero-gradient pt-40 pb-24 lg:pt-48 lg:pb-32 relative overflow-hidden">
+        <!-- Abstract Animated Background Shapes -->
+        <div class="absolute top-0 -left-40 w-96 h-96 bg-brand-cyan rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 -right-40 w-96 h-96 bg-brand-blue rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto mb-12 reveal">
+                <!-- Authority Badge -->
+                <div class="inline-flex items-center bg-white px-5 py-2 rounded-full font-bold text-sm mb-6 shadow-md border border-gray-100 text-gray-800">
+                    <span class="flex space-x-1 text-brand-yellow mr-3 text-lg">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </span>
+                    PELUANG BISNES PILIHAN RAKYAT MALAYSIA
                 </div>
                 
-                <!-- Hero Image -->
-                <div class="w-full lg:w-1/2 relative">
-                    <div class="absolute inset-0 bg-brand-cyan/20 blur-3xl rounded-full transform -translate-x-10 translate-y-10 z-0"></div>
-                    <img src="https://placehold.co/800x800/0869E8/FFFFFF?text=Product+Hero+Visual\n(MOVON+Fridge+%26+Washer)" alt="Produk MOVON Home Appliances" class="relative z-10 w-full h-auto object-cover rounded-2xl shadow-2xl border-4 border-white">
+                <!-- Aggressive Headline with Highlighter -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark leading-[1.1] mb-6 tracking-tight">
+                    Nak Tambah Pendapatan Dengan Jual Produk Rumah? Kenali Peluang Jadi <span class="text-highlight">Ejen MOVON.</span>
+                </h1>
+                
+                <p class="text-lg md:text-2xl text-gray-700 font-medium mb-10 leading-relaxed">
+                    Terokai cara jana komisen lumayan hanya dengan mempromosikan produk keperluan rumah pintar (Rent-To-Own). <br class="hidden md:block"/><span class="text-brand-blue font-bold">Tanpa perlu simpan stok, tanpa perlu modal besar.</span>
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20jadi%20Ejen%20MOVON.%20Boleh%20terangkan%20macam%20mana%20nak%20mula%3F" target="_blank" class="w-full sm:w-auto bg-gradient-to-r from-whatsapp to-[#1da04d] hover:from-[#1da04d] hover:to-whatsapp text-white px-8 py-5 rounded-2xl font-bold text-xl shadow-[0_10px_20px_rgba(37,211,102,0.3)] hover:shadow-[0_15px_30px_rgba(37,211,102,0.4)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 btn-glowing">
+                        <i class="fab fa-whatsapp text-3xl"></i> SAYA NAK TAHU CARA JOIN
+                    </a>
+                </div>
+                <div class="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
+                    <i class="fas fa-lock text-brand-blue"></i> Penerangan 100% Percuma. Tiada Paksaan.
+                </div>
+            </div>
+
+            <!-- Visualizer / VSL Placeholder -->
+            <div class="relative max-w-5xl mx-auto rounded-3xl p-2 bg-white/50 backdrop-blur shadow-2xl border border-white/60 reveal reveal-delay-1 transform perspective-1000">
+                <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-gray-100 bg-brand-dark aspect-video flex items-center justify-center" onclick="alert('Ruangan ini sesuai diletakkan Video Penerangan (VSL) dari YouTube/Vimeo. Gantikan dengan iframe sebenar kelak.')">
+                    <!-- Placeholder Image (dimmed) -->
+                    <img src="https://placehold.co/1200x675/0B1D3A/FFFFFF?text=Video+Penerangan+Ejen+MOVON" alt="Video Ejen MOVON" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-500 group-hover:scale-105">
                     
-                    <!-- Floating Badge -->
-                    <div class="absolute bottom-6 -left-6 md:left-6 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
-                        <div class="bg-green-100 p-3 rounded-full text-whatsapp">
-                            <i class="fas fa-chart-line text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold">Peluang Bisnes</p>
-                            <p class="text-sm font-bold text-brand-dark">Komisen Berdasarkan Jualan</p>
-                        </div>
+                    <!-- Play Button Overlay -->
+                    <div class="relative z-10 w-24 h-24 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark text-4xl pl-2 shadow-[0_0_30px_rgba(255,215,0,0.5)] group-hover:scale-110 transition duration-300">
+                        <i class="fas fa-play"></i>
+                    </div>
+
+                    <!-- Label -->
+                    <div class="absolute bottom-6 left-6 right-6 text-center z-10">
+                        <span class="bg-black/70 backdrop-blur text-white px-4 py-2 rounded-full text-sm font-semibold inline-flex items-center">
+                            <i class="fas fa-volume-up mr-2"></i> Klik untuk tonton cara sistem ejen berfungsi
+                        </span>
                     </div>
                 </div>
 
+                <!-- Floating Elements to show success/social proof -->
+                <div class="absolute -left-4 md:-left-12 bottom-10 bg-white p-4 rounded-xl shadow-xl flex items-center gap-4 animate-bounce-slow border border-gray-100 z-20">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-whatsapp text-xl">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-bold uppercase">Potensi Income</p>
+                        <p class="text-sm font-black text-brand-dark">Berasaskan Prestasi</p>
+                    </div>
+                </div>
+                
+                <div class="absolute -right-4 md:-right-12 top-10 bg-white p-4 rounded-xl shadow-xl flex items-center gap-4 animate-bounce-slow border border-gray-100 z-20" style="animation-delay: 1.5s;">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-brand-blue text-xl">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-bold uppercase">Produk</p>
+                        <p class="text-sm font-black text-brand-dark">High Demand</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3 — PROBLEM / PAIN POINT -->
-    <section class="py-20 bg-white">
+    <!-- SECTION 3 — PROBLEM (Agitate the Pain) -->
+    <section class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Ramai Nak Tambah Pendapatan, Tapi Tak Tahu Nak Mula Dari Mana.
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-red font-bold tracking-wider text-sm uppercase bg-red-50 px-4 py-1 rounded-full inline-block mb-4">Adakah Ini Situasi Anda Sekarang?</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-6 leading-tight">
+                    Ramai Nak Tambah Pendapatan, Tapi <span class="text-highlight">Sangkut</span> Dekat Sini...
                 </h2>
-                <p class="text-lg text-gray-600">Pernahkah anda rasa situasi di bawah? Anda tidak keseorangan.</p>
+                <p class="text-xl text-gray-600 font-medium">Jangan risau, 80% ejen kami yang dah berjaya pun pernah lalui fasa yang sama pada awalnya.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 <!-- Card 1 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 card-hover text-center relative overflow-hidden">
-                    <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-box-open"></i>
+                <div class="bg-white p-8 rounded-2xl border-2 border-gray-100 card-hover hover:border-red-200 reveal reveal-delay-1 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-red-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110 z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white shadow-md text-brand-red rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold border border-red-100">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="font-black text-xl text-brand-dark mb-3">Pening Nak Jual Apa?</h3>
+                        <p class="text-gray-600 font-medium">Tak jumpa produk yang *'evergreen'* dan sentiasa dicari orang ramai setiap hari.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-brand-dark mb-2">Keliru Pilih Produk</h3>
-                    <p class="text-gray-600 text-sm">Tak pasti produk apa yang relevan dan benar-benar diperlukan oleh orang ramai setiap hari.</p>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 card-hover text-center">
-                    <div class="w-16 h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-users-slash"></i>
+                <div class="bg-white p-8 rounded-2xl border-2 border-gray-100 card-hover hover:border-orange-200 reveal reveal-delay-2 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110 z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white shadow-md text-orange-500 rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold border border-orange-100">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h3 class="font-black text-xl text-brand-dark mb-3">Susah Cari Pelanggan</h3>
+                        <p class="text-gray-600 font-medium">Dah post di Facebook/WhatsApp tapi krik-krik. Tak tahu teknik tarik leads yang betul.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-brand-dark mb-2">Susah Cari Pelanggan</h3>
-                    <p class="text-gray-600 text-sm">Tak tahu macam mana nak mula dapatkan prospek dan pelanggan yang berminat untuk membeli.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 card-hover text-center">
-                    <div class="w-16 h-16 bg-purple-100 text-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-brain"></i>
+                <div class="bg-white p-8 rounded-2xl border-2 border-gray-100 card-hover hover:border-purple-200 reveal reveal-delay-3 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110 z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white shadow-md text-purple-600 rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold border border-purple-100">
+                            <i class="fas fa-comment-slash"></i>
+                        </div>
+                        <h3 class="font-black text-xl text-brand-dark mb-3">Tak Pandai 'Close Sale'</h3>
+                        <p class="text-gray-600 font-medium">Bila prospek PM tanya harga, lepas tu terus senyap *blue tick*. Tak tahu ayat memujuk.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-brand-dark mb-2">Kurang Pengalaman</h3>
-                    <p class="text-gray-600 text-sm">Tiada asas dalam pemasaran digital atau tak pandai 'close sale' dalam WhatsApp.</p>
                 </div>
 
                 <!-- Card 4 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 card-hover text-center">
-                    <div class="w-16 h-16 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-brand-dark mb-2">Sistem Tak Jelas</h3>
-                    <p class="text-gray-600 text-sm">Keliru tentang sistem komisen, cara daftar, dan cara mulakan bisnes tanpa risiko kerugian.</p>
-                </div>
-            </div>
-
-            <div class="text-center max-w-2xl mx-auto bg-brand-light p-6 rounded-xl border border-brand-blue/20">
-                <p class="text-brand-dark font-medium text-lg">
-                    <i class="fas fa-lightbulb text-brand-blue mr-2"></i> 
-                    Sebab itu, sebelum mula menjual, penting untuk anda faham produk, proses dan sokongan yang tersedia.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 4 — INTRODUCING THE OPPORTUNITY -->
-    <section class="py-20 bg-gray-50 border-y border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <div class="order-2 lg:order-1">
-                    <img src="https://placehold.co/600x700/E2EDFF/0869E8?text=Illustration:\nSistem+Ejen+MOVON" alt="Sistem Ejen MOVON" class="rounded-2xl shadow-lg w-full h-auto">
-                </div>
-
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-6">Kenali Peluang Sebagai Ejen Jualan MOVON.</h2>
-                    <p class="text-gray-600 mb-6 leading-relaxed text-lg">
-                        MOVON mempunyai rangkaian produk peralatan rumah pintar dan menyediakan pilihan pelan rent-to-own kepada pelanggan di Malaysia. 
-                    </p>
-                    <p class="text-gray-600 mb-8 leading-relaxed text-lg">
-                        Sebagai ejen jualan, peranan utama anda ialah memperkenalkan produk ini kepada prospek, membantu mereka memahami pilihan yang ada, dan membantu merekodkan tempahan.
-                    </p>
-
-                    <!-- Process Flow -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
-                        <h3 class="font-bold text-brand-dark mb-4 border-b pb-2">Bagaimana Proses Ini Berjalan?</h3>
-                        <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
-                            <!-- Step 1 -->
-                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-brand-blue text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 text-sm font-bold">1</div>
-                                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg bg-gray-50 shadow-sm border border-gray-100 ml-4 md:ml-0">
-                                    <h4 class="font-bold text-sm text-brand-dark">Promosi Produk</h4>
-                                </div>
-                            </div>
-                            <!-- Step 2 -->
-                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-brand-blue text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 text-sm font-bold">2</div>
-                                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg bg-gray-50 shadow-sm border border-gray-100 ml-4 md:ml-0">
-                                    <h4 class="font-bold text-sm text-brand-dark">Pertanyaan Pelanggan</h4>
-                                </div>
-                            </div>
-                            <!-- Step 3 -->
-                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-brand-blue text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 text-sm font-bold">3</div>
-                                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg bg-gray-50 shadow-sm border border-gray-100 ml-4 md:ml-0">
-                                    <h4 class="font-bold text-sm text-brand-dark">Semakan & Tempahan</h4>
-                                </div>
-                            </div>
-                            <!-- Step 4 -->
-                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-whatsapp text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 text-sm font-bold">4</div>
-                                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg bg-green-50 shadow-sm border border-green-100 ml-4 md:ml-0">
-                                    <h4 class="font-bold text-sm text-whatsapp">Jualan Layak = Komisen</h4>
-                                </div>
-                            </div>
+                <div class="bg-white p-8 rounded-2xl border-2 border-gray-100 card-hover hover:border-blue-200 reveal reveal-delay-3 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110 z-0"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white shadow-md text-brand-blue rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold border border-blue-100">
+                            <i class="fas fa-times-circle"></i>
                         </div>
-                        <p class="text-xs text-gray-400 mt-4 text-center">*Proses dan kelayakan komisen tertakluk pada terma program ejen MOVON semasa.</p>
+                        <h3 class="font-black text-xl text-brand-dark mb-3">Takut Modal Hangus</h3>
+                        <p class="text-gray-600 font-medium">Trauma join bisnes kena pegang stok, akhirnya stok bawah katil berhabuk tak terjual.</p>
                     </div>
+                </div>
+            </div>
 
-                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20faham%20sistem%20ejen%20MOVON.%20Macam%20mana%20cara%20kerja%20sebenarnya%3F" target="_blank" class="inline-flex items-center gap-2 bg-brand-dark hover:bg-black text-white px-8 py-4 rounded-xl font-bold transition-all shadow-md">
-                        NAK FAHAM SISTEM EJEN? <i class="fas fa-arrow-right"></i>
+            <!-- Transition to Solution -->
+            <div class="text-center max-w-4xl mx-auto bg-brand-dark p-8 rounded-3xl border-4 border-brand-yellow shadow-2xl reveal relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <div class="relative z-10">
+                    <h3 class="text-2xl md:text-3xl font-black text-white mb-4">
+                        Tinggalkan Cara Lama! Ini Masa Untuk Anda Berubah.
+                    </h3>
+                    <p class="text-brand-light font-medium text-lg md:text-xl mb-6">
+                        Menjual produk MOVON bermaksud anda menjual **KEPERLUAN**, bukan kemahuan. Dan bahagian paling best? Anda **TIDAK PERLU SIMPAN STOK**. Biar syarikat yang uruskan penghantaran.
+                    </p>
+                    <a href="#produk" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark px-8 py-4 rounded-xl font-black text-lg hover:bg-yellow-400 transition transform hover:scale-105 shadow-[0_5px_15px_rgba(255,215,0,0.4)]">
+                        LIHAT PRODUK YANG BAKAL ANDA JUAL &rarr;
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5 — WHY MOVON -->
-    <section id="kenapa" class="py-20 bg-white">
+    <!-- SECTION 4 — WHY MOVON (The Solution) -->
+    <section id="kenapa" class="py-24 bg-gray-50 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Kenapa Pilih Produk Home Appliances Untuk Dibina Sebagai Bisnes Jualan?
+            <div class="text-center max-w-4xl mx-auto mb-16 reveal">
+                <span class="text-brand-blue font-bold tracking-wider text-sm uppercase bg-blue-100 px-4 py-1 rounded-full inline-block mb-4">Senjata Ejen Kami</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-6 leading-tight">
+                    Kenapa Sangat Menguntungkan Jika Anda Jadi <span class="text-highlight-blue">Ejen MOVON?</span>
                 </h2>
-                <p class="text-lg text-gray-600">Pasaran peralatan rumah sentiasa relevan kerana ia adalah keperluan harian setiap isi rumah.</p>
+                <p class="text-xl text-gray-600 font-medium">Ini bukan produk bermusim. Ini adalah produk yang ada di setiap rumah rakyat Malaysia.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Benefit 1 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 text-brand-blue rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
                         <i class="fas fa-home"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Keperluan Harian</h3>
-                    <p class="text-gray-600">Produk seperti peti sejuk dan mesin basuh digunakan setiap hari, menjadikannya produk yang mudah difahami dan dipromosikan.</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Keperluan Harian (Evergreen)</h3>
+                    <p class="text-gray-600 font-medium">Orang sentiasa pindah rumah baru, kahwin, atau mesin basuh lama rosak. Permintaan tak pernah putus!</p>
                 </div>
 
                 <!-- Benefit 2 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-list"></i>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal reveal-delay-1">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-green-50 text-whatsapp rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
+                        <i class="fas fa-credit-card"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Pilihan Kategori Luas</h3>
-                    <p class="text-gray-600">Pelanggan boleh memilih daripada pelbagai siri produk pintar mengikut kesesuaian ruang dan keperluan keluarga mereka.</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Pelan Rent-to-Own Mampu Milik</h3>
+                    <p class="text-gray-600 font-medium">Pelanggan tak perlu keluar 'lump sum' ribuan ringgit. Bayaran bulanan rendah, senang *close sale*!</p>
                 </div>
 
                 <!-- Benefit 3 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-file-signature"></i>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal reveal-delay-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
+                        <i class="fas fa-truck-fast"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Pelan Rent-to-Own</h3>
-                    <p class="text-gray-600">Memudahkan prospek memiliki barangan rumah melalui pelan bayaran bulanan (tertakluk kepada kelayakan).</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Zero Modal Pegang Stok</h3>
+                    <p class="text-gray-600 font-medium">Tugas anda hanya rekod pesanan. Pemasangan, penghantaran & servis semuanya syarikat uruskan.</p>
                 </div>
 
                 <!-- Benefit 4 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-100 to-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Pemasaran Online</h3>
-                    <p class="text-gray-600">Sesuai dipasarkan secara fleksibel melalui saluran media sosial seperti Facebook, TikTok, dan kumpulan WhatsApp.</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Bisnes Di Hujung Jari</h3>
+                    <p class="text-gray-600 font-medium">100% boleh dijalankan melalui smartphone. Iklan di FB, TikTok, IG atau WhatsApp status. Sangat fleksibel.</p>
                 </div>
 
                 <!-- Benefit 5 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-graduation-cap"></i>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal reveal-delay-1">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-red-50 text-brand-red rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
+                        <i class="fas fa-hands-holding-child"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Bina Kemahiran Jualan</h3>
-                    <p class="text-gray-600">Peluang untuk anda menajamkan kemahiran pemasaran, komunikasi, dan membina portfolio jualan jangka panjang.</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Produk AI Moden</h3>
+                    <p class="text-gray-600 font-medium">Menjual produk dengan teknologi terkini (Smart AI). Produk yang 'menjual dirinya sendiri' dengan rekaan eksklusif.</p>
                 </div>
 
                 <!-- Benefit 6 -->
-                <div class="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm card-hover">
-                    <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-hand-holding-usd"></i>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm card-hover reveal reveal-delay-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-100 to-cyan-50 text-brand-cyan rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-inner border border-white">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="font-bold text-xl text-brand-dark mb-3">Komisen Berprestasi</h3>
-                    <p class="text-gray-600">Peluang menjana komisen berdasarkan jumlah jualan yang berjaya dan mematuhi syarat program syarikat.</p>
+                    <h3 class="font-black text-xl text-brand-dark mb-3">Sistem Komisen Jelas</h3>
+                    <p class="text-gray-600 font-medium">Potensi menjana pendapatan selari dengan usaha anda. Lebih rajin promosi, lebih tinggi komisen yang bakal diraih.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 6 — PRODUCT SHOWCASE -->
-    <section id="produk" class="py-20 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-brand-cyan font-semibold tracking-wider text-sm uppercase">Katalog Produk</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">
-                    Antara Produk MOVON Yang Boleh Anda Kenali & Promosikan.
+    <!-- SECTION 5 — PRODUCT SHOWCASE (Visual Heavy) -->
+    <section id="produk" class="py-24 bg-brand-dark relative overflow-hidden">
+        <!-- Decor -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-brand-blue/10 to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-yellow font-bold tracking-wider text-sm uppercase mb-4 inline-block"><i class="fas fa-fire mr-2"></i>Produk Paling Hot</span>
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                    Senjata "Lubuk Duit" Anda. <br/>Produk Mewah, <span class="text-brand-cyan">Mampu Milik.</span>
                 </h2>
-                <p class="text-gray-400">Teknologi moden untuk kediaman rakyat Malaysia. *Tertakluk pada katalog dan program ejen semasa.</p>
+                <p class="text-xl text-gray-400 font-medium">*Tertakluk pada katalog dan ketersediaan stok program ejen semasa.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 <!-- Product 1 -->
-                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 card-hover">
-                    <img src="https://placehold.co/600x400/1e293b/ffffff?text=DuoMate+Washer+Dryer" alt="DuoMate Washer Dryer" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <span class="bg-blue-900 text-blue-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">Smart Washer Dryer</span>
-                        <h3 class="text-xl font-bold mb-2">MOVON DuoMate</h3>
-                        <p class="text-gray-400 text-sm mb-4">Sistem cucian dan pengeringan pintar 2-dalam-1 yang menjimatkan ruang dan masa untuk keluarga moden.</p>
+                <div class="bg-gray-800 rounded-3xl overflow-hidden border border-gray-700 card-hover reveal">
+                    <div class="relative h-64 bg-white flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10"></div>
+                        <img src="https://placehold.co/800x800/FFFFFF/0869E8?text=MOVON+DuoMate\n(Washer+Dryer)" alt="DuoMate Washer Dryer" class="w-[80%] h-auto object-contain transform hover:scale-110 transition duration-500 relative z-0">
+                        <span class="absolute top-4 left-4 z-20 bg-brand-yellow text-brand-dark text-xs font-black px-3 py-1.5 rounded-md shadow-lg uppercase tracking-wider">Top Seller</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black text-white mb-2">MOVON DuoMate</h3>
+                        <p class="text-brand-cyan font-bold mb-4 text-sm uppercase tracking-wider">Smart Washer Dryer</p>
+                        <p class="text-gray-400 font-medium mb-6 line-clamp-3">Sistem cucian dan pengeringan pintar 2-dalam-1. Penyelamat masa suri rumah. Sangat mudah dijual untuk kondominium atau ruang sempit.</p>
+                        <div class="border-t border-gray-700 pt-4 flex justify-between items-center">
+                            <span class="text-gray-300 text-sm font-semibold"><i class="fas fa-check-circle text-whatsapp mr-1"></i> Rent-To-Own</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Product 2 -->
-                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 card-hover">
-                    <img src="https://placehold.co/600x400/1e293b/ffffff?text=ChillMate+Refrigerator" alt="ChillMate Refrigerator" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <span class="bg-blue-900 text-blue-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">Smart AI Refrigerator</span>
-                        <h3 class="text-xl font-bold mb-2">MOVON ChillMate</h3>
-                        <p class="text-gray-400 text-sm mb-4">Peti sejuk pintar dengan kapasiti besar, rekaan elegan dan teknologi pengekalan kesegaran AI.</p>
+                <div class="bg-gray-800 rounded-3xl overflow-hidden border border-gray-700 card-hover reveal reveal-delay-1">
+                    <div class="relative h-64 bg-white flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10"></div>
+                        <img src="https://placehold.co/800x800/FFFFFF/0869E8?text=MOVON+ChillMate\n(Refrigerator)" alt="ChillMate Refrigerator" class="w-[80%] h-auto object-contain transform hover:scale-110 transition duration-500 relative z-0">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black text-white mb-2">MOVON ChillMate</h3>
+                        <p class="text-brand-cyan font-bold mb-4 text-sm uppercase tracking-wider">Smart AI Refrigerator</p>
+                        <p class="text-gray-400 font-medium mb-6 line-clamp-3">Peti sejuk pintar berkapasiti besar dengan teknologi AI kekalkan kesegaran. Rekaan kaca premium yang jadi rebutan ramai.</p>
+                        <div class="border-t border-gray-700 pt-4 flex justify-between items-center">
+                            <span class="text-gray-300 text-sm font-semibold"><i class="fas fa-check-circle text-whatsapp mr-1"></i> Rent-To-Own</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Product 3 -->
-                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 card-hover">
-                    <img src="https://placehold.co/600x400/1e293b/ffffff?text=SnowMate+Air+Conditioner" alt="SnowMate Air Conditioner" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <span class="bg-blue-900 text-blue-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">Smart Air Conditioner</span>
-                        <h3 class="text-xl font-bold mb-2">MOVON SnowMate</h3>
-                        <p class="text-gray-400 text-sm mb-4">Penghawa dingin pintar dengan penyejukan pantas dan kecekapan tenaga untuk keselesaan optimum.</p>
+                <div class="bg-gray-800 rounded-3xl overflow-hidden border border-gray-700 card-hover reveal reveal-delay-2">
+                    <div class="relative h-64 bg-white flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10"></div>
+                        <img src="https://placehold.co/800x800/FFFFFF/0869E8?text=MOVON+SnowMate\n(Air+Conditioner)" alt="SnowMate Air Conditioner" class="w-[80%] h-auto object-contain transform hover:scale-110 transition duration-500 relative z-0">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black text-white mb-2">MOVON SnowMate</h3>
+                        <p class="text-brand-cyan font-bold mb-4 text-sm uppercase tracking-wider">Smart Air Conditioner</p>
+                        <p class="text-gray-400 font-medium mb-6 line-clamp-3">Cuaca panas terik Malaysia? Inilah penyelesaiannya. Aircond pintar jimat elektrik. Pemasangan pantas.</p>
+                        <div class="border-t border-gray-700 pt-4 flex justify-between items-center">
+                            <span class="text-gray-300 text-sm font-semibold"><i class="fas fa-check-circle text-whatsapp mr-1"></i> Rent-To-Own</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="text-center">
-                <p class="text-sm text-gray-500 mb-6 italic">Juga terdapat model CoolMate, WashMate, LockMate dan lain-lain mengikut penawaran semasa.</p>
-                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20belajar%20cara%20jual%20produk%20MOVON%20seperti%20peti%20ais%20dan%20mesin%20basuh.%20Boleh%20bantu%3F" target="_blank" class="inline-block bg-brand-cyan hover:bg-cyan-300 text-brand-dark px-8 py-4 rounded-xl font-bold transition-all shadow-lg">
-                    SAYA NAK BELAJAR JUAL PRODUK NI
+            <!-- Notice & Action -->
+            <div class="bg-gray-800/50 backdrop-blur border border-gray-700 p-8 rounded-3xl text-center max-w-4xl mx-auto reveal">
+                <p class="text-lg text-gray-300 mb-6 font-medium">Juga terdapat model <strong class="text-white">CoolMate, WashMate, LockMate</strong> dan penawaran siri baru dari masa ke semasa. Bayangkan komisen jika anda jual 3-5 unit ini setiap bulan!</p>
+                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20teruja%20tengok%20katalog%20produk%20MOVON.%20Macam%20mana%20cara%20nak%20mula%20jual%3F" target="_blank" class="inline-flex items-center justify-center bg-brand-yellow hover:bg-yellow-400 text-brand-dark px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-[0_0_20px_rgba(255,215,0,0.3)] transform hover:-translate-y-1 w-full sm:w-auto">
+                    SAYA NAK BELAJAR JUAL PRODUK NI &rarr;
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 7 — EARNING OPPORTUNITY -->
-    <section id="komisen" class="py-20 bg-brand-light relative overflow-hidden">
-        <!-- Abstract shape -->
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-blue-200/50 blur-3xl z-0"></div>
+    <!-- SECTION 6 — COMMISSION / EARNING POTENTIAL -->
+    <section id="komisen" class="py-24 bg-white relative overflow-hidden">
+        <!-- Floating Gold Coins Illusion -->
+        <div class="absolute top-20 right-10 opacity-20 text-brand-yellow text-9xl animate-blob"><i class="fas fa-coins"></i></div>
+        <div class="absolute bottom-20 left-10 opacity-10 text-brand-blue text-9xl animate-blob animation-delay-4000"><i class="fas fa-wallet"></i></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Macam Mana Ejen MOVON Berpeluang Mendapat Komisen?
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-whatsapp font-bold tracking-wider text-sm uppercase bg-green-50 px-4 py-1 rounded-full inline-block mb-4"><i class="fas fa-money-bill-wave mr-2"></i>Struktur Ganjaran</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-6 leading-tight">
+                    Macam Mana Anda <span class="text-highlight">Dibayar?</span>
                 </h2>
-                <p class="text-lg text-gray-600">Sebagai ejen, anda dihargai berdasarkan usaha dan prestasi jualan anda. Struktur ganjaran biasanya merangkumi komponen berikut:</p>
+                <p class="text-xl text-gray-600 font-medium">Ini bukan gaji tetap. Ini bisnes prestasi. Lebih agresif anda promosi, lebih lebat hasilnya.</p>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden max-w-4xl mx-auto mb-10">
-                <div class="p-8 md:p-10">
-                    <div class="space-y-6">
+            <!-- Commission Structure Cards -->
+            <div class="bg-gray-50 rounded-[2.5rem] shadow-xl border border-gray-200 overflow-hidden max-w-5xl mx-auto mb-12 reveal">
+                <div class="p-8 md:p-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         
-                        <!-- Commission Component 1 -->
-                        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center p-4 rounded-xl border border-blue-50 bg-blue-50/50">
-                            <div class="bg-brand-blue text-white p-3 rounded-lg">
-                                <i class="fas fa-coins text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-brand-dark text-lg">Personal Sales Commission</h4>
-                                <p class="text-sm text-gray-600">Komisen asas yang diterima untuk setiap unit produk yang berjaya dijual dan diluluskan.</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="inline-block bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm font-semibold">[RUJUK JADUAL TERKINI]</span>
+                        <!-- Block 1 -->
+                        <div class="bg-white p-8 rounded-3xl border-b-4 border-brand-blue shadow-sm hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mb-6 text-2xl font-black">1</div>
+                            <h4 class="font-black text-brand-dark text-xl mb-3">Personal Sales Commission</h4>
+                            <p class="text-gray-600 font-medium mb-4">Komisen asas terus masuk untuk setiap unit produk yang berjaya dipasang (installed) di rumah pelanggan.</p>
+                            <div class="bg-gray-100 p-3 rounded-lg text-center font-bold text-gray-700 text-sm border border-gray-200 border-dashed">
+                                [RUJUK JADUAL SEMASA]
                             </div>
                         </div>
 
-                        <!-- Commission Component 2 -->
-                        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center p-4 rounded-xl border border-green-50 bg-green-50/50">
-                            <div class="bg-whatsapp text-white p-3 rounded-lg">
-                                <i class="fas fa-arrow-trend-up text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-brand-dark text-lg">Personal Sales Incentive</h4>
-                                <p class="text-sm text-gray-600">Insentif tambahan jika anda berjaya mencapai sasaran atau tier jualan tertentu dalam bulan tersebut.</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="inline-block bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm font-semibold">[SYARAT MINIMUM JUALAN]</span>
+                        <!-- Block 2 -->
+                        <div class="bg-white p-8 rounded-3xl border-b-4 border-whatsapp shadow-sm hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-green-100 text-whatsapp rounded-full flex items-center justify-center mb-6 text-2xl font-black">2</div>
+                            <h4 class="font-black text-brand-dark text-xl mb-3">Personal Sales Incentive</h4>
+                            <p class="text-gray-600 font-medium mb-4">Bila capai target unit tertentu sebulan, ada 'extra bonus' menanti. Ini yang melipatgandakan income!</p>
+                            <div class="bg-gray-100 p-3 rounded-lg text-center font-bold text-gray-700 text-sm border border-gray-200 border-dashed">
+                                [SYARAT MINIMUM JUALAN]
                             </div>
                         </div>
 
-                        <!-- Commission Component 3 -->
-                        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center p-4 rounded-xl border border-purple-50 bg-purple-50/50">
-                            <div class="bg-purple-500 text-white p-3 rounded-lg">
-                                <i class="fas fa-users text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-brand-dark text-lg">Insentif Pasukan / Builder</h4>
-                                <p class="text-sm text-gray-600">Peluang menjana pendapatan lebih jika pelan semasa membenarkan pembinaan dan pengurusan team jualan.</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="inline-block bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm font-semibold">[TERTAKLUK PELAN SEMASA]</span>
+                        <!-- Block 3 -->
+                        <div class="bg-white p-8 rounded-3xl border-b-4 border-purple-500 shadow-sm hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-6 text-2xl font-black">3</div>
+                            <h4 class="font-black text-brand-dark text-xl mb-3">Team/Builder Bonus</h4>
+                            <p class="text-gray-600 font-medium mb-4">Peluang luar biasa jika anda bina kumpulan jualan sendiri (tertakluk kepada pelan & kelayakan syarikat).</p>
+                            <div class="bg-gray-100 p-3 rounded-lg text-center font-bold text-gray-700 text-sm border border-gray-200 border-dashed">
+                                [TERTAKLUK KELAYAKAN]
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="mt-8 bg-gray-50 border border-gray-200 p-5 rounded-xl text-center">
-                        <p class="font-medium text-brand-dark mb-2">Nak tahu jadual komisen dan insentif terkini dalam RM?</p>
-                        <p class="text-sm text-gray-600 mb-4">Oleh kerana polisi dan promosi syarikat sentiasa dikemaskini, sila hubungi kami untuk mendapatkan lampiran rasmi komisen terkini.</p>
-                        <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20tahu%20tentang%20jadual%20komisen%20dan%20insentif%20Ejen%20MOVON%20yang%20terkini.%20Boleh%20kongsikan%3F" target="_blank" class="inline-flex items-center gap-2 bg-whatsapp hover:bg-green-600 text-white px-6 py-3 rounded-lg font-bold transition-all shadow">
-                            <i class="fab fa-whatsapp text-xl"></i> WHATSAPP UNTUK SEMAK KOMISEN
-                        </a>
                     </div>
                 </div>
+            </div>
+
+            <!-- Urgent Call to Action for Commission Table -->
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <div class="bg-brand-light p-8 rounded-3xl border-2 border-brand-blue border-dashed">
+                    <h3 class="font-black text-2xl text-brand-dark mb-4">Nak Tengok Angka RM Sebenar?</h3>
+                    <p class="text-gray-600 font-medium mb-6 text-lg">Kerana polisi komisen syarikat sentiasa ada promosi, kami kongsikan jadual penuh terus ke WhatsApp anda supaya maklumat tepat.</p>
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20tengok%20jadual%20komisen%20dan%20insentif%20Ejen%20MOVON%20yang%20terkini.%20Boleh%20hantar%3F" target="_blank" class="inline-flex items-center gap-3 bg-whatsapp hover:bg-green-600 text-white px-8 py-4 rounded-xl font-black text-lg transition-all shadow-[0_10px_20px_rgba(37,211,102,0.3)] transform hover:-translate-y-1 btn-glowing">
+                        <i class="fab fa-whatsapp text-2xl"></i> MINTA JADUAL KOMISEN TERKINI
+                    </a>
+                </div>
+                <p class="text-xs text-gray-400 mt-6 max-w-2xl mx-auto">
+                    <strong>Penting:</strong> Pendapatan ejen berbeza mengikut kerajinan dan jualan individu. Tiada jaminan pendapatan tetap. Maklumat rasmi adalah berdasarkan dokumen rasmi MOVON terkini.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7 — SOCIAL PROOF / TESTIMONIALS (WhatsApp Style) -->
+    <section id="testimoni" class="py-24 bg-gray-50 border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-blue font-bold tracking-wider text-sm uppercase bg-blue-100 px-4 py-1 rounded-full inline-block mb-4">Bukan Omong Kosong</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-6 leading-tight">
+                    Kisah Mereka Yang Dah Bermula. <span class="text-highlight">Anda Bila Lagi?</span>
+                </h2>
+                <p class="text-xl text-gray-600 font-medium">Lihat sendiri pengalaman sebenar mereka yang telah mengorak langkah bersama pasukan kami.</p>
+            </div>
+
+            <!-- WhatsApp Style Chat Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Chat Bubble 1 -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 reveal relative">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Ejen+A" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-brand-dark">[Nama Ejen 1]</h4>
+                            <p class="text-xs text-whatsapp font-semibold"><i class="fas fa-circle text-[8px] mr-1"></i>Suri Rumah</p>
+                        </div>
+                    </div>
+                    <div class="wa-bubble text-sm text-gray-800 font-medium mb-2">
+                        "[GANTIKAN DENGAN TESTIMONI SEBENAR] Syukur sangat, mulanya ingat susah nak jual peti ais online. Tapi lepas follow skrip yang leader bagi, minggu ni je dah lepas 2 unit pemasangan!"
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium float-right">10:45 AM <i class="fas fa-check-double text-blue-500 ml-1"></i></span>
+                </div>
+
+                <!-- Chat Bubble 2 -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 reveal reveal-delay-1 relative">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Ejen+B" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-brand-dark">[Nama Ejen 2]</h4>
+                            <p class="text-xs text-brand-blue font-semibold"><i class="fas fa-circle text-[8px] mr-1"></i>Pekerja Swasta (Part Time)</p>
+                        </div>
+                    </div>
+                    <div class="wa-bubble text-sm text-gray-800 font-medium mb-2">
+                        "[GANTIKAN DENGAN TESTIMONI SEBENAR] Gaji hakiki ngam-ngam makan. Buat MOVON part time malam lepas kerja. Alhamdulillah komisen masuk dapat cover duit kereta bulan ni."
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium float-right">2:30 PM <i class="fas fa-check-double text-blue-500 ml-1"></i></span>
+                </div>
+
+                <!-- Chat Bubble 3 -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 reveal reveal-delay-2 relative">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Ejen+C" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-brand-dark">[Nama Ejen 3]</h4>
+                            <p class="text-xs text-purple-600 font-semibold"><i class="fas fa-circle text-[8px] mr-1"></i>Online Seller</p>
+                        </div>
+                    </div>
+                    <div class="wa-bubble text-sm text-gray-800 font-medium mb-2">
+                        "[GANTIKAN DENGAN TESTIMONI SEBENAR] Dulu asyik jual produk margin kecil. Pindah jual MOVON, margin sedap sikit. Letihnya sama, tapi pulangannya berbaloi! Sistem pun senang."
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium float-right">Kemarin <i class="fas fa-check-double text-blue-500 ml-1"></i></span>
+                </div>
+
             </div>
 
             <!-- Disclaimer -->
-            <div class="max-w-4xl mx-auto text-center px-4">
-                <p class="text-xs text-gray-500 border-t border-gray-200 pt-4">
-                    <strong>Penafian Pantas:</strong> Komisen bergantung sepenuhnya kepada jualan yang sah, layak, prestasi individu serta syarat dan ketetapan program syarikat semasa. Tiada pendapatan tetap atau automatik dijamin. Maklumat yang dikemukakan melalui WhatsApp akan berpandukan polisi rasmi terkini.
-                </p>
-            </div>
+            <p class="text-center text-sm text-gray-400 mt-10 max-w-2xl mx-auto italic">
+                *Tangkapan skrin dan kisah kejayaan adalah lakonan semula atau placeholder. Sila gantikan dengan pencapaian sebenar team anda yang mematuhi terma pengiklanan.
+            </p>
         </div>
     </section>
 
-    <!-- SECTION 8 — TEAM SUPPORT & TRAINING -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Tak Pasti Macam Mana Nak Mula? Ketahui Sokongan Yang Disediakan.
+    <!-- SECTION 8 — STEP-BY-STEP PROCESS -->
+    <section id="cara-join" class="py-24 bg-brand-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-black mb-6">
+                    Macam Mana Nak Mula? <span class="text-brand-yellow">Mudah Sangat!</span>
                 </h2>
-                <p class="text-lg text-gray-600">Kami faham ramai yang bermula dari zero. Ini antara persediaan yang biasanya disediakan untuk ejen baru:</p>
+                <p class="text-xl text-gray-300 font-medium">Biar kami bimbing anda dari A sampai Z. Ini adalah langkah demi langkah.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Support Item -->
-                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mb-4 text-xl">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <h4 class="font-bold text-brand-dark mb-2">Pengenalan Produk</h4>
-                    <p class="text-xs text-gray-600">Panduan spesifikasi dan fungsi produk untuk diterangkan kepada prospek.</p>
-                </div>
-                <!-- Support Item -->
-                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mb-4 text-xl">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h4 class="font-bold text-brand-dark mb-2">Bahan Promosi</h4>
-                    <p class="text-xs text-gray-600">Akses kepada gambar, video dan copywriting asas (Tertakluk ketersediaan).</p>
-                </div>
-                <!-- Support Item -->
-                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mb-4 text-xl">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h4 class="font-bold text-brand-dark mb-2">Sistem Tempahan</h4>
-                    <p class="text-xs text-gray-600">Tunjuk ajar cara merekod tempahan pelanggan menggunakan portal / sistem syarikat.</p>
-                </div>
-                <!-- Support Item -->
-                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center mb-4 text-xl">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h4 class="font-bold text-brand-dark mb-2">Bimbingan Pasukan</h4>
-                    <p class="text-xs text-gray-600">Ruang untuk bertanya soalan jika pelanggan mempunyai pertanyaan yang teknikal.</p>
-                </div>
-            </div>
-
-            <!-- Team Specific Support Placeholder -->
-            <div class="mt-10 max-w-3xl mx-auto bg-gradient-to-r from-brand-blue to-cyan-600 rounded-2xl p-8 text-white text-center shadow-lg">
-                <h3 class="font-bold text-xl mb-2"><i class="fas fa-gift mr-2 text-yellow-300"></i> Eksklusif Bersama Pasukan Kami</h3>
-                <p class="text-blue-100 text-sm mb-4">
-                    [MASUKKAN BONUS / SISTEM SUPPORT TEAM SAYA DI SINI JIKA ADA SEPERTI ZOOM CLASS, FB ADS GUIDE, DSB]
-                </p>
-                <p class="text-xs text-blue-200 italic">*Nota: Sebarang sokongan tambahan di atas adalah tertakluk kepada pengesahan dan budi bicara pengurusan pasukan kami.*</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 9 — WHO SHOULD JOIN -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Siapa Yang Sesuai Meneroka Peluang Ni?
-                </h2>
-                <p class="text-lg text-gray-600">Kejayaan dalam jualan bergantung kepada usaha, strategi, dan kemahuan untuk belajar.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                <!-- Profile 1 -->
-                <div class="bg-white p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-gray-100">
-                    <div class="bg-brand-light p-3 rounded-xl text-brand-blue">
-                        <i class="fas fa-briefcase text-2xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-dark text-lg mb-1">Pekerja Sepenuh Masa</h4>
-                        <p class="text-sm text-gray-600">Mencari aktiviti sampingan di luar waktu kerja (part-time) untuk membina sumber kewangan ekstra untuk keluarga.</p>
-                    </div>
-                </div>
-
-                <!-- Profile 2 -->
-                <div class="bg-white p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-gray-100">
-                    <div class="bg-brand-light p-3 rounded-xl text-brand-blue">
-                        <i class="fas fa-store text-2xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-dark text-lg mb-1">Online Seller & Dropship</h4>
-                        <p class="text-sm text-gray-600">Sudah biasa menjual di FB, IG, atau TikTok dan ingin menambah kategori produk 'High Ticket' ke dalam portfolio jualan.</p>
-                    </div>
-                </div>
-
-                <!-- Profile 3 -->
-                <div class="bg-white p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-gray-100">
-                    <div class="bg-brand-light p-3 rounded-xl text-brand-blue">
-                        <i class="fas fa-home text-2xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-dark text-lg mb-1">Suri Rumah Menceburi Bisnes</h4>
-                        <p class="text-sm text-gray-600">Mahu peluang bisnes yang fleksibel, boleh diuruskan dari rumah hanya menggunakan telefon pintar dan internet.</p>
-                    </div>
-                </div>
-
-                <!-- Profile 4 -->
-                <div class="bg-white p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-gray-100">
-                    <div class="bg-brand-light p-3 rounded-xl text-brand-blue">
-                        <i class="fas fa-seedling text-2xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-dark text-lg mb-1">Newbie Pemasaran</h4>
-                        <p class="text-sm text-gray-600">Mereka yang berminat membina pengalaman baru dalam industri jualan dan sanggup belajar proses langkah demi langkah.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 10 — SOCIAL PROOF & TRUST -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Kenali Pengalaman Ejen MOVON.
-                </h2>
-                <p class="text-lg text-gray-600">Pencapaian ejen adalah hasil usaha gigih masing-masing. Ini adalah gambaran perjalanan ejen yang bersama kami.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial Placeholder 1 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Foto" alt="Ejen Placeholder" class="w-14 h-14 rounded-full object-cover">
-                        <div>
-                            <h4 class="font-bold text-brand-dark">[NAMA EJEN 1]</h4>
-                            <p class="text-xs text-gray-500">Ejen Jualan MOVON</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 text-sm italic">"[GANTIKAN DENGAN TESTIMONI SEBENAR. Contoh: Pada mulanya saya ragu-ragu sebab tak pandai bab teknikal peti ais. Tapi lepas ikut panduan dan mula sharing dekat FB, Alhamdulillah ada jiran yang berminat mendaftar pelan bulanan.]"</p>
-                </div>
-
-                <!-- Testimonial Placeholder 2 -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Foto" alt="Ejen Placeholder" class="w-14 h-14 rounded-full object-cover">
-                        <div>
-                            <h4 class="font-bold text-brand-dark">[NAMA EJEN 2]</h4>
-                            <p class="text-xs text-gray-500">Ejen Jualan MOVON</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 text-sm italic">"[GANTIKAN DENGAN TESTIMONI SEBENAR. Pastikan testimoni adalah benar, mendapat izin, dan tidak memaparkan sebarang maklumat peribadi atau resit tanpa ditapis.]"</p>
-                </div>
-
-                <!-- Video/Process Placeholder -->
-                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200 flex flex-col justify-center items-center text-center">
-                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4 text-gray-400 text-2xl">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <h4 class="font-bold text-brand-dark text-sm mb-2">[RUANGAN VIDEO]</h4>
-                    <p class="text-xs text-gray-500">Sediakan video pendek dari YouTube/TikTok yang menerangkan proses kerja ejen jika ada.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 11 — STEP-BY-STEP HOW TO JOIN -->
-    <section id="cara-join" class="py-20 bg-brand-dark text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Macam Mana Nak Mulakan Langkah Pertama?
-                </h2>
-                <p class="text-gray-300">Proses pendaftaran yang mudah. Tiada jalan pintas, semuanya langkah demi langkah.</p>
-            </div>
-
-            <div class="relative border-l-2 border-brand-blue ml-4 md:ml-10 space-y-12 pb-8">
+            <!-- Vertical Timeline -->
+            <div class="relative border-l-4 border-brand-yellow ml-6 md:ml-12 space-y-12 pb-8 reveal">
                 
                 <!-- Step 1 -->
-                <div class="relative pl-8 md:pl-12">
-                    <div class="absolute w-8 h-8 bg-brand-blue rounded-full -left-[17px] top-0 flex items-center justify-center text-sm font-bold border-4 border-brand-dark">1</div>
-                    <h4 class="text-xl font-bold mb-2 text-brand-cyan">Hubungi Melalui WhatsApp</h4>
-                    <p class="text-gray-300 text-sm">Klik butang WhatsApp di website ini untuk berhubung terus. Maklumkan hasrat anda untuk mendapatkan penerangan.</p>
+                <div class="relative pl-10 md:pl-16">
+                    <div class="absolute w-12 h-12 bg-brand-yellow rounded-full -left-[26px] top-0 flex items-center justify-center text-xl font-black text-brand-dark shadow-[0_0_15px_rgba(255,215,0,0.6)]">1</div>
+                    <h4 class="text-2xl font-black mb-2 text-white">Klik Butang WhatsApp</h4>
+                    <p class="text-gray-300 font-medium text-lg">Hubungi kami melalui link yang disediakan. Maklumkan anda berminat untuk faham sistem ejen.</p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="relative pl-8 md:pl-12">
-                    <div class="absolute w-8 h-8 bg-brand-blue rounded-full -left-[17px] top-0 flex items-center justify-center text-sm font-bold border-4 border-brand-dark">2</div>
-                    <h4 class="text-xl font-bold mb-2 text-brand-cyan">Fahami Peluang & Komisen</h4>
-                    <p class="text-gray-300 text-sm">Kami akan terangkan kategori produk, kaedah jualan dan struktur komisen terkini supaya anda jelas sebelum buat keputusan.</p>
+                <div class="relative pl-10 md:pl-16">
+                    <div class="absolute w-12 h-12 bg-brand-yellow rounded-full -left-[26px] top-0 flex items-center justify-center text-xl font-black text-brand-dark shadow-[0_0_15px_rgba(255,215,0,0.6)]">2</div>
+                    <h4 class="text-2xl font-black mb-2 text-white">Sesi Penerangan Ringkas</h4>
+                    <p class="text-gray-300 font-medium text-lg">Kami akan terangkan detail komisen, produk dan berikan anda borang pendaftaran (jika anda bersetuju).</p>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="relative pl-8 md:pl-12">
-                    <div class="absolute w-8 h-8 bg-brand-blue rounded-full -left-[17px] top-0 flex items-center justify-center text-sm font-bold border-4 border-brand-dark">3</div>
-                    <h4 class="text-xl font-bold mb-2 text-brand-cyan">Sedia Dokumen & Daftar</h4>
-                    <p class="text-gray-300 text-sm">Semak syarat kelayakan asas. Jika bersetuju, isikan borang pendaftaran rasmi syarikat dan kemukakan dokumen yang diperlukan (seperti salinan IC).</p>
+                <div class="relative pl-10 md:pl-16">
+                    <div class="absolute w-12 h-12 bg-brand-yellow rounded-full -left-[26px] top-0 flex items-center justify-center text-xl font-black text-brand-dark shadow-[0_0_15px_rgba(255,215,0,0.6)]">3</div>
+                    <h4 class="text-2xl font-black mb-2 text-white">Hantar Dokumen & Daftar</h4>
+                    <p class="text-gray-300 font-medium text-lg">Hantar salinan kad pengenalan & maklumat bank (untuk pembayaran komisen). Kami proses dalam sistem rasmi.</p>
                 </div>
 
                 <!-- Step 4 -->
-                <div class="relative pl-8 md:pl-12">
-                    <div class="absolute w-8 h-8 bg-brand-blue rounded-full -left-[17px] top-0 flex items-center justify-center text-sm font-bold border-4 border-brand-dark">4</div>
-                    <h4 class="text-xl font-bold mb-2 text-brand-cyan">Onboarding & Mula Promosi</h4>
-                    <p class="text-gray-300 text-sm">Apabila pendaftaran diluluskan, anda akan diberikan panduan asas (onboarding). Selepas itu, anda sudah boleh mula mempromosikan produk MOVON!</p>
+                <div class="relative pl-10 md:pl-16">
+                    <div class="absolute w-12 h-12 bg-whatsapp rounded-full -left-[26px] top-0 flex items-center justify-center text-xl font-black text-white shadow-[0_0_15px_rgba(37,211,102,0.6)]">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-2 text-whatsapp">Mula Buka Kedai Online Anda!</h4>
+                    <p class="text-gray-300 font-medium text-lg">Apabila sah didaftarkan, anda akan dimasukkan ke grup support team, dapat bahan iklan (gambar/video) dan boleh mula 'berperang' tarik leads!</p>
                 </div>
 
-            </div>
-
-            <div class="text-center mt-12">
-                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20untuk%20mendaftar%20sebagai%20Ejen%20MOVON.%20Apa%20langkah%20seterusnya%3F" target="_blank" class="inline-flex items-center justify-center bg-whatsapp hover:bg-green-500 text-white px-10 py-5 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all w-full sm:w-auto">
-                    OKAY, SAYA NAK MULA SEKARANG <i class="fas fa-arrow-right ml-2"></i>
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 12 — RECRUITER PROFILE -->
-    <section class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gray-50 rounded-3xl p-8 md:p-12 border border-gray-200 shadow-sm flex flex-col md:flex-row items-center gap-8">
+    <!-- SECTION 9 — RECRUITER PROFILE -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-gray-50 to-white rounded-[3rem] p-8 md:p-14 border-2 border-gray-100 shadow-2xl flex flex-col md:flex-row items-center gap-12 reveal">
                 
-                <div class="shrink-0 relative">
-                    <img src="https://placehold.co/300x300/cbd5e1/475569?text=Gambar\nSAYA" alt="Recruiter Profile" class="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-8 border-white shadow-md">
-                    <div class="absolute bottom-4 right-4 bg-whatsapp text-white p-2 rounded-full border-2 border-white">
-                        <i class="fas fa-check-circle"></i>
+                <div class="shrink-0 relative group">
+                    <div class="absolute inset-0 bg-brand-blue rounded-full filter blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                    <img src="https://placehold.co/400x400/0B1D3A/FFD700?text=Gambar\nLeader" alt="Recruiter Profile" class="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-white shadow-xl">
+                    <div class="absolute bottom-4 right-4 bg-whatsapp text-white p-3 rounded-full border-4 border-white shadow-lg z-10" title="Verified Recruiter">
+                        <i class="fas fa-shield-check text-xl"></i>
                     </div>
                 </div>
 
                 <div class="text-center md:text-left flex-1">
-                    <h2 class="text-2xl font-bold text-brand-dark mb-1">Siapa Yang Akan Bantu Anda Bermula?</h2>
-                    <h3 class="text-brand-blue font-semibold text-lg mb-4">[NAMA SAYA / NAMA TEAM] - <span class="text-gray-500 text-sm font-normal">[STATUS EJEN MOVON DISAHKAN]</span></h3>
+                    <h2 class="text-3xl md:text-4xl font-black text-brand-dark mb-2">Bersedia Untuk Dibimbing?</h2>
+                    <h3 class="text-brand-blue font-bold text-xl mb-6">[NAMA ANDA DI SINI] <span class="block mt-1 text-gray-500 text-sm font-medium">[Leader / Recruiter Ejen Sah MOVON]</span></h3>
                     
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        "Saya sedia membantu individu yang serius berminat untuk memahami peluang ejen MOVON. Daripada pengenalan produk sehinggalah proses pendaftaran dan langkah awal pemasaran. Jangan risau untuk bertanya, saya cuba permudahkan pemahaman anda."
+                    <p class="text-gray-600 mb-8 font-medium text-lg leading-relaxed italic">
+                        "Misi saya adalah bantu seramai mungkin rakyat Malaysia keluar dari kemelut kewangan dengan membina 'bisnes tanpa modal' melalui platform MOVON. Tak pandai cakap? Tak pernah menjual? Jangan risau, modul asas akan diberikan. Yang penting ada kesanggupan untuk belajar dan bertindak."
                     </p>
 
-                    <div class="bg-white p-4 rounded-xl border border-gray-100 text-sm text-gray-500 mb-6 italic">
-                        [RUANGAN UNTUK MASUKKAN LATAR BELAKANG / PENGALAMAN SEBENAR JIKA ADA]
+                    <!-- Exclusive Bonus Placeholder -->
+                    <div class="bg-yellow-50 p-4 rounded-2xl border border-yellow-200 mb-8">
+                        <h4 class="font-bold text-yellow-800 text-sm mb-2"><i class="fas fa-gift mr-2"></i>Eksklusif Bila Join Team Kami:</h4>
+                        <ul class="text-sm text-yellow-700 font-medium space-y-1">
+                            <li><i class="fas fa-check text-whatsapp mr-2"></i> [MASUKKAN BONUS TEAM 1: Contoh: Sesi Zoom Mingguan]</li>
+                            <li><i class="fas fa-check text-whatsapp mr-2"></i> [MASUKKAN BONUS TEAM 2: Contoh: Group Support Aktif]</li>
+                            <li><i class="fas fa-check text-whatsapp mr-2"></i> [MASUKKAN BONUS TEAM 3: Contoh: Bank Copywriting Iklan]</li>
+                        </ul>
                     </div>
 
-                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20tanya%20beberapa%20soalan%20tentang%20peluang%20ejen%20MOVON%20sebelum%20mendaftar." target="_blank" class="inline-block bg-brand-dark hover:bg-black text-white px-6 py-3 rounded-lg font-bold transition-all shadow">
-                        <i class="fab fa-whatsapp mr-2"></i> CHAT DENGAN SAYA
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20nak%20tanya%20sikit%20tentang%20peluang%20ejen%20MOVON%20dan%20support%20yang%20team%20sediakan." target="_blank" class="inline-flex items-center justify-center gap-3 bg-brand-dark hover:bg-black text-white px-8 py-4 rounded-xl font-black text-lg transition-all shadow-[0_10px_20px_rgba(11,29,58,0.2)] hover:-translate-y-1 w-full sm:w-auto">
+                        <i class="fab fa-whatsapp text-2xl text-whatsapp"></i> CHAT PERSONAL DENGAN SAYA
                     </a>
                 </div>
 
@@ -737,293 +729,284 @@
         </div>
     </section>
 
-    <!-- SECTION 13 — FAQ OBJECTION HANDLING -->
-    <section id="faq" class="py-20 bg-brand-light">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                    Soalan Yang Ramai Tanya Sebelum Join.
+    <!-- SECTION 10 — FAQ (Objection Handling) -->
+    <section id="faq" class="py-24 bg-brand-light">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-brand-blue font-bold tracking-wider text-sm uppercase mb-4 inline-block"><i class="fas fa-question-circle mr-2"></i>Persoalan Minda</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-4 leading-tight">
+                    Masih Ragu-Ragu? <span class="text-highlight">Baca FAQ Ini.</span>
                 </h2>
-                <p class="text-gray-600">Jawapan terus terang untuk leraikan kekeliruan anda.</p>
+                <p class="text-xl text-gray-600 font-medium">Kami jawab segala kemusykilan anda dengan jujur tanpa berselindung.</p>
             </div>
 
-            <div class="space-y-4" id="faq-container">
+            <div class="space-y-4 reveal" id="faq-container">
                 <!-- FAQ Item 1 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>1. Apa sebenarnya tugas seorang Ejen MOVON?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                <div class="bg-white rounded-2xl border-2 border-transparent shadow-sm overflow-hidden transition-all hover:border-blue-100">
+                    <button class="accordion-button w-full px-8 py-6 text-left font-bold text-lg text-brand-dark flex justify-between items-center focus:outline-none">
+                        <span>1. Saya langsung takda pengalaman menjual. Boleh ke buat?</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400 text-xl"></i>
                     </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Tugas utama anda adalah mempromosikan produk pintar MOVON (seperti peti ais, mesin basuh) kepada pelanggan, menerangkan fungsi serta pelan rent-to-own yang ada, dan membantu pelanggan mengisi maklumat tempahan. Anda tidak memasang produk atau baiki kerosakan.</p>
+                    <div class="accordion-content px-8 text-gray-600 font-medium text-base">
+                        <p>Boleh. Bisnes ini bergantung 80% pada kerajinan anda promosi, dan 20% ilmu. Ilmu produk kami akan ajar. Skrip menjawab WhatsApp pun ada. Anda cuma perlu *copy paste* dan berani bertegur sapa dengan prospek.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 2 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>2. Adakah pendaftaran percuma atau berbayar?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                <div class="bg-white rounded-2xl border-2 border-transparent shadow-sm overflow-hidden transition-all hover:border-blue-100">
+                    <button class="accordion-button w-full px-8 py-6 text-left font-bold text-lg text-brand-dark flex justify-between items-center focus:outline-none">
+                        <span>2. Betul ke tak payah keluar modal beli stok?</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400 text-xl"></i>
                     </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Yuran pendaftaran adalah tertakluk kepada polisi promosi syarikat yang terkini. Sila hubungi kami di WhatsApp untuk kami sahkan sama ada pendaftaran sedang percuma atau jika ada sebarang caj rasmi.</p>
+                    <div class="accordion-content px-8 text-gray-600 font-medium text-base">
+                        <p>Betul 100%. Anda tak perlu beli peti ais atau simpan stok dalam bilik. Urusan penghantaran dan pemasangan (termasuk servis) akan diuruskan terus oleh HQ syarikat MOVON.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 3 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>3. Adakah perlu beli produk atau simpan stok?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                <div class="bg-white rounded-2xl border-2 border-transparent shadow-sm overflow-hidden transition-all hover:border-blue-100">
+                    <button class="accordion-button w-full px-8 py-6 text-left font-bold text-lg text-brand-dark flex justify-between items-center focus:outline-none">
+                        <span>3. Ada yuran pendaftaran ke?</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400 text-xl"></i>
                     </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Tidak perlu. Anda tidak perlu menyimpan stok di rumah. Segala urusan penghantaran dan pemasangan kepada pelanggan akan diuruskan terus oleh pihak syarikat MOVON.</p>
+                    <div class="accordion-content px-8 text-gray-600 font-medium text-base">
+                        <p>Yuran pendaftaran ejen tertakluk kepada kempen promosi syarikat semasa. Ada ketikanya ia adalah PERCUMA. Sila hubungi saya di WhatsApp supaya saya boleh semak status pendaftaran hari ini.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 4 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>4. Boleh buat secara part-time?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                <div class="bg-white rounded-2xl border-2 border-transparent shadow-sm overflow-hidden transition-all hover:border-blue-100">
+                    <button class="accordion-button w-full px-8 py-6 text-left font-bold text-lg text-brand-dark flex justify-between items-center focus:outline-none">
+                        <span>4. Kalau saya bekerja part-time, boleh ke komit?</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400 text-xl"></i>
                     </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Ya, sangat digalakkan. Ramai ejen yang menjalankan bisnes ini secara sambilan di luar waktu kerja hakiki memandangkan promosi boleh dilakukan secara online.</p>
+                    <div class="accordion-content px-8 text-gray-600 font-medium text-base">
+                        <p>Sangat digalakkan. Majoriti ejen top kami mula secara *part-time* selepas waktu kerja hakiki. Anda hanya perlukan smartphone dan capaian internet untuk membalas WhatsApp prospek.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 5 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>5. Macam mana komisen dikira dan bila dibayar?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                <div class="bg-white rounded-2xl border-2 border-transparent shadow-sm overflow-hidden transition-all hover:border-blue-100">
+                    <button class="accordion-button w-full px-8 py-6 text-left font-bold text-lg text-brand-dark flex justify-between items-center focus:outline-none">
+                        <span>5. Pendapatan confirm dapat ke setiap bulan?</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400 text-xl"></i>
                     </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Komisen dikira berdasarkan jumlah pemasangan produk yang berjaya pada bulan tersebut. Tarikh pembayaran komisen dan jadual penuh bergantung pada polisi semasa yang kami akan lampirkan melalui WhatsApp.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 6 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>6. Adakah pendapatan sebagai ejen dijamin?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
-                    </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Tidak. Ini adalah peluang jualan berdasarkan prestasi komisen. Pendapatan anda berpandukan sejauh mana usaha pemasaran dan jumlah jualan yang anda hasilkan. Tiada gaji tetap.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 7 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>7. Dokumen apa yang diperlukan untuk daftar?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
-                    </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Secara asasnya, salinan Kad Pengenalan (IC) dan maklumat perbankan (untuk pembayaran komisen). Dokumen penuh akan disenaraikan semasa proses pendaftaran sah.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 8 -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <button class="accordion-button w-full px-6 py-5 text-left font-bold text-brand-dark flex justify-between items-center focus:outline-none">
-                        <span>8. Boleh promote guna Facebook, TikTok atau Ads?</span>
-                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
-                    </button>
-                    <div class="accordion-content px-6 text-gray-600 text-sm">
-                        <p>Boleh. Ejen digalakkan menggunakan kreativiti pemasaran masing-masing di pelbagai platform online, selagi mematuhi garis panduan pengiklanan rasmi (advertising guidelines) yang ditetapkan oleh MOVON.</p>
+                    <div class="accordion-content px-8 text-gray-600 font-medium text-base">
+                        <p>Ini MESTI JELAS: Tidak dijamin. Ini bukan skim cepat kaya atau jawatan gaji tetap. Pendapatan anda (komisen) adalah berdasarkan berapa unit produk yang berjaya dijual dan diluluskan pemasangannya. Rajin usaha, lebat hasilnya.</p>
                     </div>
                 </div>
             </div>
             
-            <div class="text-center mt-10">
-                <p class="text-sm text-gray-500 mb-4">Ada soalan lain yang tidak terjawab di sini?</p>
-                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20ada%20beberapa%20soalan%20tambahan%20mengenai%20peluang%20Ejen%20MOVON." target="_blank" class="text-brand-blue font-bold hover:underline">
-                    Tanya terus di WhatsApp &rarr;
+            <div class="text-center mt-12 reveal">
+                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20ada%20beberapa%20soalan%20lagi%20yang%20takde%20dalam%20FAQ.%20Boleh%20bantu%3F" target="_blank" class="inline-block border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white font-bold px-8 py-4 rounded-xl transition-all">
+                    ADA SOALAN LAIN? TANYA DI WHATSAPP
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 14 — FINAL CONVERSION CTA -->
-    <section class="py-24 dark-gradient text-white text-center px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
-                Dah Nampak Gambaran Peluang Ni? Jom Dapatkan Penerangan Sebelum Buat Keputusan.
-            </h2>
-            <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-                Kalau anda berminat untuk mengenali peluang jualan produk MOVON, klik WhatsApp dan saya bantu terangkan langkah seterusnya.
-            </p>
-            
-            <div class="flex flex-col items-center">
-                <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20untuk%20mendaftar%20sebagai%20Ejen%20MOVON.%20Apa%20langkah%20seterusnya%3F" target="_blank" class="bg-whatsapp hover:bg-[#1da04d] text-white px-10 py-5 rounded-2xl font-bold text-xl md:text-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 flex items-center gap-3 mb-4 w-full sm:w-auto justify-center">
-                    <i class="fab fa-whatsapp text-3xl"></i> WHATSAPP SEKARANG
-                </a>
-                <p class="text-sm text-blue-200">
-                    *Tanya dulu pun boleh. Fahamkan produk, sistem dan syarat sebelum mula.
-                </p>
-            </div>
-        </div>
-    </section>
+    <!-- SECTION 11 — FINAL CALL TO ACTION + LEAD FORM (Hybrid Strategy) -->
+    <section class="py-24 dark-gradient text-white relative">
+        <!-- Decor -->
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
 
-    <!-- SECTION 15 — SHORT LEAD FORM -->
-    <section class="py-20 bg-gray-50 border-t border-gray-200">
-        <div class="max-w-lg mx-auto px-4 sm:px-6">
-            <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Borang Minat Ringkas</h3>
-                    <p class="text-sm text-gray-600">Tinggalkan butiran, info ini akan dijana terus ke WhatsApp kami.</p>
-                </div>
-
-                <form id="leadForm" onsubmit="submitLeadForm(event)" class="space-y-5">
-                    <div>
-                        <label for="nama" class="block text-sm font-semibold text-gray-700 mb-1">Nama Penuh / Panggilan</label>
-                        <input type="text" id="nama" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition" placeholder="Cth: Ahmad Ali">
-                    </div>
-                    
-                    <div>
-                        <label for="whatsapp" class="block text-sm font-semibold text-gray-700 mb-1">Nombor WhatsApp</label>
-                        <input type="tel" id="whatsapp" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition" placeholder="Cth: 0123456789">
-                    </div>
-
-                    <div>
-                        <label for="komitmen" class="block text-sm font-semibold text-gray-700 mb-1">Status Komitmen</label>
-                        <select id="komitmen" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition bg-white">
-                            <option value="Part-time">Part-time (Sambilan)</option>
-                            <option value="Full-time">Full-time (Sepenuh Masa)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="pengalaman" class="block text-sm font-semibold text-gray-700 mb-1">Pengalaman Jualan (Optional)</label>
-                        <input type="text" id="pengalaman" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition" placeholder="Cth: Pernah jual penapis air / tiada pengalaman">
-                    </div>
-
-                    <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2 mt-4">
-                        <i class="fab fa-whatsapp text-xl text-whatsapp"></i> HANTAR MINAT KE WHATSAPP
-                    </button>
-
-                    <p class="text-xs text-gray-400 text-center mt-4">
-                        Dengan menekan butang, anda bersetuju butiran ini dibawa ke WhatsApp untuk tujuan komunikasi berkaitan pendaftaran ejen.
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Final Pitch -->
+                <div class="text-center lg:text-left reveal">
+                    <h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                        Tindakan Kecil Hari Ini Boleh Mengubah <span class="text-brand-yellow">Kewangan Anda.</span>
+                    </h2>
+                    <p class="text-xl text-blue-100 mb-8 font-medium">
+                        Berhenti jadi pemerhati orang lain buat duit. Ambil peluang ini sekarang. Isikan borang ringkas di sebelah, atau terus tekan butang WhatsApp di bawah. Kami menanti anda.
                     </p>
-                </form>
+                    
+                    <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20dah%20baca%20semua%20penerangan%20di%20website.%20SAYA%20BERSEDIA%20NAK%20DAFTAR%20JADI%20EJEN%20MOVON." target="_blank" class="bg-whatsapp hover:bg-[#1da04d] text-white px-8 py-6 rounded-2xl font-black text-xl md:text-2xl shadow-[0_10px_30px_rgba(37,211,102,0.4)] transition-all transform hover:scale-105 inline-flex items-center gap-3 w-full sm:w-auto justify-center btn-glowing mb-6">
+                        <i class="fab fa-whatsapp text-4xl"></i> TERUS WHATSAPP SAYA
+                    </a>
+                    
+                    <div class="flex items-center justify-center lg:justify-start gap-4 text-blue-200 text-sm font-medium">
+                        <i class="fas fa-shield-alt text-2xl text-brand-yellow"></i>
+                        <span>Privasi Terjamin. Tiada Spam. Pendaftaran Tertakluk Kepada Kelulusan MOVON.</span>
+                    </div>
+                </div>
+
+                <!-- Express Lead Form (Directs to WhatsApp) -->
+                <div class="bg-white text-brand-dark p-8 md:p-10 rounded-[2.5rem] shadow-2xl reveal reveal-delay-1 relative">
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-brand-yellow rounded-full blur-2xl opacity-50 z-0"></div>
+                    <div class="relative z-10">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-black mb-2">Borang VIP Fast-Track</h3>
+                            <p class="text-sm font-medium text-gray-500">Isi borang ini, maklumat akan dihantar terus ke WhatsApp leader untuk respon pantas.</p>
+                        </div>
+
+                        <form id="leadForm" onsubmit="submitLeadForm(event)" class="space-y-6">
+                            <div>
+                                <label for="nama" class="block text-sm font-bold text-gray-700 mb-2">Nama Penuh</label>
+                                <input type="text" id="nama" required class="w-full px-5 py-4 bg-gray-50 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-brand-blue outline-none transition font-medium" placeholder="Cth: Ahmad Ali">
+                            </div>
+                            
+                            <div>
+                                <label for="whatsapp" class="block text-sm font-bold text-gray-700 mb-2">Nombor WhatsApp</label>
+                                <input type="tel" id="whatsapp" required class="w-full px-5 py-4 bg-gray-50 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-brand-blue outline-none transition font-medium" placeholder="Cth: 0123456789">
+                            </div>
+
+                            <div>
+                                <label for="komitmen" class="block text-sm font-bold text-gray-700 mb-2">Anda Boleh Buat Full Time Atau Part Time?</label>
+                                <select id="komitmen" class="w-full px-5 py-4 bg-gray-50 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-brand-blue outline-none transition font-medium appearance-none">
+                                    <option value="Part-time">Part-time (Malam/Hujung Minggu)</option>
+                                    <option value="Full-time">Full-time (Fokus Sepenuh Masa)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-brand-blue to-[#0650b8] hover:from-[#0650b8] hover:to-brand-dark text-white font-black text-lg py-5 rounded-xl transition-all shadow-lg flex justify-center items-center gap-3 transform hover:-translate-y-1 mt-4">
+                                HANTAR PERMOHONAN <i class="fas fa-paper-plane"></i>
+                            </button>
+
+                            <p class="text-[11px] text-gray-400 text-center mt-4 font-medium leading-tight">
+                                Dengan menekan butang, anda bersetuju mesej ini dijana dan dihantar menggunakan aplikasi WhatsApp ke nombor rasmi recruiter kami.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- SECTION 16 — FOOTER -->
-    <footer class="bg-brand-dark text-gray-400 py-12 border-t border-gray-800">
+    <!-- SECTION 12 — FOOTER -->
+    <footer class="bg-[#040D1F] text-gray-400 py-16 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-8">
                 <div>
-                    <span class="font-bold text-xl text-white">MOVON <span class="font-normal text-gray-400">Agent Opportunity</span></span>
+                    <span class="font-black text-2xl text-white">MOVON <span class="font-medium text-gray-500 text-lg">Agent Recruitment</span></span>
                 </div>
-                <div class="flex flex-wrap justify-center gap-6">
-                    <a href="https://movon.com.my/" target="_blank" rel="nofollow" class="hover:text-white transition">MOVON Official Website</a>
-                    <a href="#" class="hover:text-white transition">Privacy Notice</a>
-                    <a href="#" class="hover:text-white transition">Disclaimer</a>
+                <div class="flex flex-wrap justify-center gap-8 font-medium">
+                    <a href="https://movon.com.my/" target="_blank" rel="nofollow" class="hover:text-brand-yellow transition">MOVON Official Website</a>
+                    <a href="#" class="hover:text-brand-yellow transition">Privacy Notice</a>
+                    <a href="#" class="hover:text-brand-yellow transition">Disclaimer</a>
                 </div>
                 <div>
-                    <a href="#" class="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition" aria-label="Back to top">
+                    <a href="#" class="bg-gray-800 hover:bg-brand-blue text-white p-4 rounded-xl transition shadow-lg inline-block" aria-label="Back to top">
                         <i class="fas fa-arrow-up"></i>
                     </a>
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 pt-8 text-xs text-gray-500 leading-relaxed text-justify">
-                <p class="mb-2"><strong>Penafian (Disclaimer):</strong> Laman ini bertujuan memberi penerangan dan mengumpulkan minat bagi peluang ejen MOVON. Ia dikendalikan oleh recruiter individu/team dan BUKAN portal korporat rasmi MOVON Malaysia. Semua imej, logo dan tanda dagang produk yang dipaparkan di sini adalah hak milik MOVON.</p>
-                <p>Segala maklumat mengenai komisen, insentif, syarat pendaftaran, promosi dan kelayakan ejen yang dinyatakan dalam laman ini adalah sebagai panduan awal dan tidak mengikat secara sah. Maklumat rasmi, tepat dan terkini hanya tertakluk kepada polisi syarikat MOVON yang berkuat kuasa. Sebarang permohonan ejen adalah tertakluk kepada kelulusan pengurusan syarikat. Tiada sebarang janji pendapatan bulanan atau pulangan kewangan tetap diberikan memandangkan ia merupakan sistem berasaskan komisen jualan.</p>
+            <div class="border-t border-gray-800 pt-10 text-[11px] text-gray-500 leading-relaxed text-justify">
+                <p class="mb-3"><strong class="text-gray-300">Penafian Penting (Disclaimer):</strong> Laman pendaratan (landing page) ini bertujuan semata-mata untuk memberi penerangan awal dan mengumpulkan minat individu yang mahu meneroka peluang sebagai Ejen jualan MOVON. Laman ini dikendalikan oleh recruiter / ejen sah individu yang berdikari (independent) dan <strong>BUKAN</strong> portal korporat rasmi MOVON Malaysia. Segala maklumat produk, imej jenama dan logo adalah hak cipta mutlak milik syarikat MOVON.</p>
+                <p>Segala maklumat mengenai struktur komisen, ganjaran, terma dan syarat pendaftaran, promosi bulanan dan kelayakan ejen yang dipaparkan adalah sebagai panduan ilustrasi atau unjuran awal dan ia tidak mengikat secara sah. Polisi muktamad tertakluk pada pindaan dan arahan pengurusan syarikat MOVON dari masa ke masa. Proses kelulusan ejen dinilai sepenuhnya oleh pihak ibu pejabat. Peluang ini adalah program berasaskan pencapaian prestasi jualan semata-mata dan kami tidak memberikan jaminan pulangan modal, keuntungan pasti, skim pelaburan, atau pendapatan tetap bulanan.</p>
             </div>
             
-            <div class="mt-8 text-center text-xs">
-                &copy; <script>document.write(new Date().getFullYear())</script> Recruitment Team (Independent). All Rights Reserved.
+            <div class="mt-10 text-center text-sm font-semibold text-gray-600">
+                &copy; <script>document.write(new Date().getFullYear())</script> Independent Agent Team. Hak Cipta Terpelihara.
             </div>
         </div>
     </footer>
 
-    <!-- STICKY MOBILE WHATSAPP -->
-    <div class="fixed bottom-4 right-4 z-50 md:hidden">
-        <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20tahu%20pasal%20Ejen%20MOVON." target="_blank" class="bg-whatsapp text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(32,184,88,0.4)] hover:scale-110 transition-transform">
-            <i class="fab fa-whatsapp text-3xl"></i>
+    <!-- STICKY MOBILE WHATSAPP (Glowing & Pulsing) -->
+    <div class="fixed bottom-6 right-6 z-50 md:hidden">
+        <a href="https://wa.me/601154280582?text=Hi%2C%20saya%20berminat%20nak%20tahu%20pasal%20Ejen%20MOVON." target="_blank" class="relative flex items-center justify-center w-16 h-16 bg-whatsapp text-white rounded-full shadow-[0_5px_20px_rgba(37,211,102,0.6)] btn-glowing transform hover:scale-110 transition-transform">
+            <!-- Ping animation wrapper -->
+            <span class="absolute inline-flex h-full w-full rounded-full bg-whatsapp opacity-30 animate-ping"></span>
+            <i class="fab fa-whatsapp text-4xl relative z-10"></i>
         </a>
     </div>
 
     <!-- JavaScript For Interactivity -->
     <script>
         
-        // Mobile Menu Toggle
+        // 1. Mobile Menu Toggle Logic
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         const links = document.querySelectorAll('.mobile-link');
+        const icon = btn.querySelector('i');
 
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')){
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
         });
 
-        // Close mobile menu on link click
         links.forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             });
         });
 
-        // FAQ Accordion Logic
+        // 2. FAQ Accordion Logic
         const accordions = document.querySelectorAll('.accordion-button');
         
         accordions.forEach(acc => {
             acc.addEventListener('click', function() {
-                // Toggle active class on button
                 this.classList.toggle('active');
-                
-                // Toggle active class on content panel
                 const panel = this.nextElementSibling;
                 if (panel.classList.contains('active')) {
                     panel.classList.remove('active');
                 } else {
-                    // Optional: Close other panels
-                    /*
-                    document.querySelectorAll('.accordion-content').forEach(p => p.classList.remove('active'));
-                    document.querySelectorAll('.accordion-button').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    */
                     panel.classList.add('active');
                 }
             });
         });
 
-        // Lead Form Submit to WhatsApp
+        // 3. WhatsApp Express Lead Form Submission
         function submitLeadForm(event) {
-            event.preventDefault(); // Prevent page reload
+            event.preventDefault();
             
-            // Get values
             const nama = document.getElementById('nama').value.trim();
             const komitmen = document.getElementById('komitmen').value;
-            const pengalaman = document.getElementById('pengalaman').value.trim() || 'Tiada/Tidak dinyatakan';
             
-            // Construct WhatsApp Message
-            let message = `*BORANG MINAT EJEN MOVON*%0A%0A`;
-            message += `Nama: ${nama}%0A`;
-            message += `Komitmen: ${komitmen}%0A`;
-            message += `Pengalaman Sales: ${pengalaman}%0A%0A`;
-            message += `Hi, saya berminat untuk tahu lebih lanjut cara pendaftaran dan sistem komisen. Boleh bantu?`;
+            // Format nice WhatsApp message
+            let message = `🚀 *PERMOHONAN FAST-TRACK EJEN MOVON* 🚀%0A%0A`;
+            message += `*Nama:* ${nama}%0A`;
+            message += `*Status Komitmen:* ${komitmen}%0A%0A`;
+            message += `Hi Leader, saya dah tengok website dan serius berminat nak mula. Boleh terangkan proses pendaftaran?`;
             
-            // WhatsApp Target Number
             const waNumber = "601154280582";
-            
-            // Create URL and open
             const waUrl = `https://wa.me/${waNumber}?text=${message}`;
             window.open(waUrl, '_blank');
         }
 
-        // Add tracking events (Placeholders for GA4/Meta Pixel setup)
-        document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
-            link.addEventListener('click', function() {
-                // console.log('whatsapp_click event tracked');
-                // if (typeof gtag === 'function') { gtag('event', 'whatsapp_click'); }
-                // if (typeof fbq === 'function') { fbq('trackCustom', 'WhatsAppClick'); }
-            });
-        });
+        // 4. Scroll Reveal Animations (Intersection Observer)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Point at which element appears
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+
+        // 5. Reading Progress Bar Logic
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+            
+            // Navbar shadow adjustment on scroll
+            if(winScroll > 50) {
+                document.getElementById('navbar').classList.add('shadow-md');
+                document.getElementById('navbar').classList.remove('shadow-sm');
+            } else {
+                document.getElementById('navbar').classList.add('shadow-sm');
+                document.getElementById('navbar').classList.remove('shadow-md');
+            }
+        };
+
     </script>
 
 </body>
