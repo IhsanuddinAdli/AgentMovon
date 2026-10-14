@@ -236,23 +236,19 @@
                 </div>
             </div>
 
-            <!-- Visualizer / VSL Placeholder -->
-            <div class="relative max-w-5xl mx-auto rounded-3xl p-2 bg-white/50 backdrop-blur shadow-2xl border border-white/60 reveal reveal-delay-1 transform perspective-1000">
-                <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-gray-100 bg-brand-dark aspect-video flex items-center justify-center" onclick="alert('Ruangan ini sesuai diletakkan Video Penerangan (VSL) dari YouTube/Vimeo. Gantikan dengan iframe sebenar kelak.')">
-                    <!-- Placeholder Image (dimmed) -->
-                    <img src="https://placehold.co/1200x675/0B1D3A/FFFFFF?text=Video+Penerangan+Ejen+MOVON" alt="Video Ejen MOVON" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-500 group-hover:scale-105">
+            <!-- Video Penerangan Ejen (VSL) -->
+            <div class="relative max-w-sm md:max-w-md mx-auto rounded-3xl p-2 bg-white/50 backdrop-blur shadow-2xl border border-white/60 reveal reveal-delay-1 transform perspective-1000">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-100 bg-black aspect-[9/16] flex items-center justify-center shadow-inner group">
                     
-                    <!-- Play Button Overlay -->
-                    <div class="relative z-10 w-24 h-24 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark text-4xl pl-2 shadow-[0_0_30px_rgba(255,215,0,0.5)] group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-play"></i>
-                    </div>
-
-                    <!-- Label -->
-                    <div class="absolute bottom-6 left-6 right-6 text-center z-10">
-                        <span class="bg-black/70 backdrop-blur text-white px-4 py-2 rounded-full text-sm font-semibold inline-flex items-center">
-                            <i class="fas fa-volume-up mr-2"></i> Klik untuk tonton cara sistem ejen berfungsi
-                        </span>
-                    </div>
+                    <!-- Google Drive Video Embed -->
+                    <iframe 
+                        src="https://drive.google.com/file/d/1wDicc93-O4m8EU_Gb8BrAlKrwOKnFH45/preview" 
+                        class="w-full h-full object-cover" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen" 
+                        allowfullscreen>
+                    </iframe>
+                    
                 </div>
 
                 <!-- Floating Elements to show success/social proof -->
